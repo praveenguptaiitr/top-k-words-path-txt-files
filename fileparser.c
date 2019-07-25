@@ -139,12 +139,14 @@ void insertTrieAndMH(char* word, struct tNode **root, struct mh* minH)
 
 void displayMH(struct mh* minH)
 {
+#ifdef _ENABLE_LOGS_INFO_RESULT_FILE_PARSER_
 	int count;
-
 	for(count=0; count<minH->count; count++)
+	{
 		printf("%s %d\n", minH->arr[count].word, minH->arr[count].freq);
+	}
 	printf("\n");
-
+#endif
 }
 
 void removeNonAlphaNumFromStr(char* buf)
@@ -153,7 +155,9 @@ void removeNonAlphaNumFromStr(char* buf)
 	char temp[PATH_MAX] = {0};
 	int temp_count = 0;
 	int count;
-	//printf("non-modified string is: [%s]\n", buf);
+#ifdef _ENABLE_LOGS_VERBOSE_FILE_PARSER_REMOVE_NON_ALPHA_NUMERIC_
+	printf("non-modified string is: [%s]\n", buf);
+#endif
 	for(count=0; count<len; count++)
 	{
 		if(isalpha(buf[count]) || isdigit(buf[count]))
@@ -161,7 +165,9 @@ void removeNonAlphaNumFromStr(char* buf)
 	}
 	temp[temp_count] = '\0';
 	strcpy(buf, temp);
-	//printf("modified string is: [%s]\n", buf);
+#ifdef _ENABLE_LOGS_VERBOSE_FILE_PARSER_REMOVE_NON_ALPHA_NUMERIC_
+	printf("modified string is: [%s]\n", buf);
+#endif
 }
 
 struct mh* printKMostFreq(FILE *fp, char* str, int k)
@@ -171,15 +177,24 @@ struct mh* printKMostFreq(FILE *fp, char* str, int k)
 	struct tNode* root = NULL;
 	char buf[PATH_MAX];
 
+#ifdef _ENABLE_LOGS_VERBOSE_FILE_PARSER_
+		printf("\n\ncontents of file [%s] =>\n\n", str);
+#endif
 	while(fscanf(fp, "%s", buf) != EOF)
 	{
-		//printf("[%s] ", buf);
+#ifdef _ENABLE_LOGS_VERBOSE_FILE_PARSER_
+		printf("[%s] ", buf);
+#endif
 		removeNonAlphaNumFromStr(buf);
 		if(buf[0] != '\0')
 			insertTrieAndMH(buf, &root, minH);
 	}
+#ifdef _ENABLE_LOGS_VERBOSE_FILE_PARSER_
+	printf("\n");
+#endif
+#ifdef _ENABLE_LOGS_INFO_RESULT_FILE_PARSER_
 	printf("\nTop [%d] frequent words from file [%s] =>\n", k, str);
-
+#endif
 	displayMH(minH);
 
 	return minH;

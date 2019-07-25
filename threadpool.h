@@ -5,6 +5,8 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#include <semaphore.h>
+#include "logdef.h"
 
 typedef struct job
 {
@@ -19,15 +21,13 @@ typedef struct jobqueue
 	job *front;
 	job *rear;
 	int len;
-	int has_jobs;
 	pthread_mutex_t queue_mutex;
 } jobqueue;
 
 typedef struct threadpool
 {
 	jobqueue jobq;
-	volatile int num_thread_working;
-	volatile int num_thread_alive;
+	int num_thread_working;
 	pthread_mutex_t thpool_mutex;
 	pthread_t *pthread;
 } threadpool;

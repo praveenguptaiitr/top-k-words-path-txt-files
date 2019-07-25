@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <dirent.h>
+#include "logdef.h"
 
 struct tNode
 {

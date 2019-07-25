@@ -2,40 +2,46 @@
 
 void displayMaxHeapArray(struct maxHeapArray maxHArr, int k)
 {
-	//printf("thread: [%ld] function: [%s] line: [%d] enter\n", pthread_self(), __func__, __LINE__);
-
+#ifdef _ENABLE_LOGS_VERBOSE_
+	printf("thread: [%ld] function: [%s] line: [%d] enter\n", pthread_self(), __func__, __LINE__);
+#endif
 	int count;
 
 	if(maxHArr.total_size == 0)
 		return;
-
-	//printf("thread: [%ld] function: [%s] line: [%d] Max Heap Array:\n\n\n", pthread_self(), __func__, __LINE__);
-
+#ifdef _ENABLE_LOGS_VERBOSE_
+	printf("thread: [%ld] function: [%s] line: [%d] Max Heap Array:\n\n\n", pthread_self(), __func__, __LINE__);
+#endif
 	if(k > maxHArr.total_size)
 		k = maxHArr.total_size;
 
 	int printCount = 0;
+#ifdef _ENABLE_LOGS_INFO_RESULT_
 	printf("%s %d\n", maxHArr.maxH[maxHArr.total_size-1].word, maxHArr.maxH[maxHArr.total_size-1].freq);
+#endif
 	printCount = 1;
 	for(count=maxHArr.total_size-2; count>=0; count--)
 	{
 		if(checkRepeatingWordMaxHeap(maxHArr, maxHArr.maxH[count].word, count+1, maxHArr.total_size-1) == 0)
 		{
+#ifdef _ENABLE_LOGS_INFO_RESULT_
 			printf("%s %d\n", maxHArr.maxH[count].word, maxHArr.maxH[count].freq);
+#endif
 			printCount++;
 			if(printCount == k)
 				break;
 		}
-		/*
+		
 		else
 		{
+#ifdef _ENABLE_LOGS_INFO_RESULT_ALREADY_PRINTED_
 			printf("\n\nthread: [%ld] function: [%s] line: [%d] already printed word: [%s]\n", pthread_self(), __func__, __LINE__, maxHArr.maxH[count].word);
-		}
-		*/
+#endif
+		}		
 	}
-
-	//printf("\n\nthread: [%ld] function: [%s] line: [%d] exit\n", pthread_self(), __func__, __LINE__);
-
+#ifdef _ENABLE_LOGS_VERBOSE_
+	printf("\n\nthread: [%ld] function: [%s] line: [%d] exit\n", pthread_self(), __func__, __LINE__);
+#endif
 }
 
 int checkRepeatingWordMaxHeap(struct maxHeapArray maxHArr, char* word, int start, int end)

@@ -8,8 +8,7 @@
 #include "threadpool.h"
 #include "fileparser.h"
 #include "maxheap.h"
-
-//#define K_MOST_FREQUENT_WORDS_FROM_FILE 10
+#include "logdef.h"
 
 void listDir(char *filepath);
 int isTxtFile(char *filename);
