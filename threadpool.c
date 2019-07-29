@@ -334,7 +334,7 @@ void threadpool_destroy(threadpool* thpool)
 	printf("thread: [%ld] function: [%s] line: [%d] threads_keepalive: [%d] jobqueue_not_empty: [%d] threads_working: [%d] job queue length: [%d]\n", pthread_self(), __func__, __LINE__, threads_keepalive, jobqueue_not_empty, threads_working, thpool->jobq.len);
 #endif
 	threads_keepalive = 0;
-#ifdef _ENABLE_LOGS_THREAD_INFO_
+#ifdef _ENABLE_LOGS_THREAD_VERBOSE_
 	printf("thread: [%ld] function: [%s] line: [%d] threads_keepalive: [%d] jobqueue_not_empty: [%d] threads_working: [%d]\n", pthread_self(), __func__, __LINE__, threads_keepalive, jobqueue_not_empty, threads_working);
 #endif
 	jobqueue_destroy(&(thpool->jobq));
