@@ -9,7 +9,15 @@ struct maxHeapArray maxHArr;
 
 int main(int argc, char** argv)
 {
-	clock_t t1 = clock();
+	time_t start_time = time(NULL);
+	struct tm* start_watch_time;
+	start_watch_time = localtime(&start_time);
+
+#ifdef _ENABLE_LOGS_INFO_TIME_
+	printf("\nthread: [%ld] function: [%s] line: [%d] Program Start Time: [%02d:%02d:%02d]\n\n", pthread_self(), __func__, __LINE__,  
+		start_watch_time->tm_hour, start_watch_time->tm_min, start_watch_time->tm_sec);
+#endif
+
 #ifdef _ENABLE_LOGS_VERBOSE_
 	printf("thread: [%ld] function: [%s] line: [%d] enter\n", pthread_self(), __func__, __LINE__);
 #endif
@@ -111,11 +119,16 @@ int main(int argc, char** argv)
 	displayMaxHeapArray(maxHArr, K_MOST_FREQUENT_WORDS_FROM_FILE);
 	destroy_maxHeap(maxHArr);
 
-	clock_t t2 = clock();
-	double time_taken = (double)(t2 - t1)/CLOCKS_PER_SEC;
+	time_t end_time = time(NULL);
+	struct tm* end_watch_time;
+	end_watch_time = localtime(&end_time);
+
 #ifdef _ENABLE_LOGS_INFO_TIME_
-	printf("\nthread: [%ld] function: [%s] line: [%d] Work Completed in seconds: [%f]\n", pthread_self(), __func__, __LINE__, time_taken);
+	printf("\n\nthread: [%ld] function: [%s] line: [%d] Work Completed in seconds: [%.5f] Program End Time: [%02d:%02d:%02d]\n", pthread_self(), __func__, __LINE__,  
+		difftime(end_time, start_time), 
+		end_watch_time->tm_hour, end_watch_time->tm_min, end_watch_time->tm_sec );
 #endif
+
 	return 0;
 }
 

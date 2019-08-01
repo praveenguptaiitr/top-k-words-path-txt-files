@@ -5,7 +5,6 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <dirent.h>
-#include <semaphore.h>
 #include "logdef.h"
 
 typedef struct job
